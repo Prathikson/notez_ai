@@ -14,5 +14,8 @@
   },
   "keywords": [],
   "author": "Prathikson",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ai-meeting-assistant": "file:"
+  }
 }
