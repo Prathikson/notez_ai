@@ -1,4 +1,4 @@
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = "https://notez-backend-rs5g.onrender.com/"
 
 export const uploadFile = async (file: File): Promise<{ audioUrl: string; transcription: string; summary: string }> => {
   const formData = new FormData();
