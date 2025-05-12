@@ -5,6 +5,9 @@ import uploadRouter from './routes/upload';
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('Server is up and running! 😎');
+});
 // Serve the 'uploads' folder as a static directory
 // Make sure the 'uploads' folder is in the root directory of the project (same level as 'src' folder)
 app.use('/uploads', (req, res, next) => {
