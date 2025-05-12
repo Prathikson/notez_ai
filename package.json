@@ -1,0 +1,18 @@
+{
+  "name": "ai-meeting-assistant",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A microservice-based AI meeting assistant",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:frontend": "npm --workspace apps/frontend run dev",
+    "dev:backend": "npm --workspace apps/backend run dev",
+    "build": "echo \"Add your workspace build steps here\""
+  },
+  "keywords": [],
+  "author": "Prathikson",
+  "license": "MIT"
+}
