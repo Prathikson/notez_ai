@@ -9,7 +9,7 @@ import * as dotenv from 'dotenv';
 const router = express.Router();
 dotenv.config();
 
-const production = process.env.PRODUCTION_URL!
+// const production = process.env.PRODUCTION_URL!
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -50,7 +50,7 @@ router.post('/', upload.single('file'), async (req: Request & { file?: Express.M
     const audioFileName = path.basename(audioPath);
     const absoluteAudioPath = path.resolve('uploads', audioFileName);
     // const audioUrl = `http://localhost:5000/uploads/${audioFileName}`;
-    const audioUrl = `${production}/uploads/${audioFileName}`;
+    const audioUrl = `https://notez-backend-rs5g.onrender.com/uploads/${audioFileName}`;
 
     // Transcribe the audio with OpenAI Whisper
     console.log('Transcribing audio...');

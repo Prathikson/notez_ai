@@ -41,7 +41,7 @@ export default function Header() {
             <motion.a
               key={link.name}
               href={link.href}
-              className="relative text-gray-700 hover:text-black font-medium transition-colors duration-200"
+              className="relative text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
               whileHover={{ scale: 1.05 }}
             >
               {link.name}
@@ -59,7 +59,7 @@ export default function Header() {
             Login
           </motion.button>
           <motion.button
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-full transition duration-200"
+            className="bg-gradient-to-br from-blue-600 to-violet-400 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-full transition duration-200"
             whileTap={{ scale: 0.95 }}
           >
             Sign Up
