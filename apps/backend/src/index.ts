@@ -16,7 +16,7 @@ app.use('/uploads', (req, res, next) => {
 }, express.static(path.join(__dirname, '..', 'uploads')));
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'https://notez-ai-frontend.vercel.app/', // Allow requests from the frontend
+  origin: 'https://notez-ai-frontend.vercel.app', // Allow requests from the frontend
   methods: ['GET', 'POST'],       // Allow specific methods
   allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
 }));
