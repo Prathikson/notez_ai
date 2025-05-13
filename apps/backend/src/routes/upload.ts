@@ -9,7 +9,7 @@ import * as dotenv from 'dotenv';
 const router = express.Router();
 dotenv.config();
 
-const production = process.env.PRODUCTION_URL!;
+const production = process.env.PRODUCTION_URL!
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
