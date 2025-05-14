@@ -36,7 +36,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
         {/* Logo */}
         <div className="text-xl font-bold" style={{ color: '#003934' }}>
-          <a href='/'><span className="cursor-pointer">NoteZ AI</span></a>
+          <a href='/'><span className="cursor-pointer">Notez AI</span></a>
         </div>
 
         {/* Nav Links */}

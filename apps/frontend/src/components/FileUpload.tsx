@@ -71,8 +71,7 @@ const FileUpload = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-4xl font-semibold mb-6">NoteZ AI</h1>
-
+      <h1 className="text-4xl font-semibold mb-6">Notez AI</h1>
       {/* Drop Zone */}
       <motion.div 
         {...getRootProps()}
