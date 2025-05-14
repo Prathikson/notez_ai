@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { uploadFile } from '../services/api'; 
+import { uploadFile } from '../services/api';
 import { motion } from 'framer-motion';
-import { useDropzone } from 'react-dropzone'; // Add react-dropzone for drag-and-drop
+import { useDropzone } from 'react-dropzone';
 
 const FileUpload = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -11,13 +11,7 @@ const FileUpload = () => {
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files) {
-  //     setFile(event.target.files[0]);
-  //   }
-  // };
-
-    const handleFileChange = (acceptedFiles: File[]) => {
+  const handleFileChange = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       setFile(acceptedFiles[0]);
     }
@@ -25,7 +19,6 @@ const FileUpload = () => {
 
   const handleUpload = async () => {
     if (!file) return;
-
     setIsUploading(true);
     setError(null);
     setAudioUrl(null);
@@ -45,31 +38,25 @@ const FileUpload = () => {
   };
 
   const handleDownload = async (url: string) => {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch the MP3 file");
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Failed to fetch the MP3 file");
 
-    const blob = await response.blob();
-    const downloadUrl = window.URL.createObjectURL(blob);
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = url.split('/').pop() || 'audio.mp3';
 
-    const link = document.createElement("a");
-    link.href = downloadUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("Download error:", error);
+    }
+  };
 
-    // Optional: infer filename from the original URL
-    const filename = url.split('/').pop() || 'audio.mp3';
-    link.download = filename;
-
-    document.body.appendChild(link); // Required for Firefox
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(downloadUrl); // Clean up
-
-  } catch (error) {
-    console.error("Download error:", error);
-  }
-};
-
-  // Use react-dropzone
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: handleFileChange,
     accept: '.mp4',
@@ -78,52 +65,46 @@ const FileUpload = () => {
 
   return (
     <motion.div 
-      className="flex flex-col items-center mt-36 p-6 w-4/5 mx-auto bg-white rounded-xl"
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
+      className="flex flex-col items-center mt-36 p-6 w-4/5 mx-auto rounded-xl backdrop-blur-lg shadow-2xl border border-white/10"
+      style={{ backgroundColor: '#003934', color: '#fffef0' }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-4xl font-semibold text-blue-600 mb-6">NoteZ AI</h1>
+      <h1 className="text-4xl font-semibold mb-6">NoteZ AI</h1>
 
-   {/* Drop Zone */}
+      {/* Drop Zone */}
       <motion.div 
         {...getRootProps()}
-        className="border-2 border-dashed border-gray-300 p-8 w-full text-center rounded-xl cursor-pointer hover:bg-gray-100 transition-all duration-300 ease-in-out mb-6"
+        className="border-2 border-dashed border-[#fffef0]/50 p-8 w-full text-center rounded-xl cursor-pointer hover:bg-[#fffef0]/10 transition-all duration-300 ease-in-out mb-6"
       >
         <input {...getInputProps()} />
-        <p className="text-lg font-medium text-gray-600">
+        <p className="text-lg font-medium">
           {file ? file.name : "🫳 Drag & Drop your MP4 file here, or click to select a file."}
         </p>
       </motion.div>
 
-{/* 
-      <motion.input
-        type="file"
-        accept="video/mp4"
-        onChange={handleFileChange}
-        disabled={isUploading}
-        className="mb-4 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-      /> */}
+      {/* Upload Button */}
       <motion.button
         onClick={handleUpload}
         disabled={isUploading || !file}
-        className="bg-gradient-to-br from-blue-600 to-violet-400 text-white px-6 py-3 rounded-full mb-4 hover:bg-blue-600 active:bg-blue-700 focus:outline-none transition-all duration-300"
+        className="bg-gradient-to-br from-white to-[#fffef0] text-[#003934] px-6 py-3 rounded-full mb-4 font-semibold shadow-md hover:opacity-90 transition-all duration-300"
       >
         {isUploading ? 'Uploading...' : 'Upload and Convert'}
       </motion.button>
 
-      {error && <div className="text-red-500 mb-2">{error}</div>}
+      {error && <div className="text-red-400 mb-2">{error}</div>}
 
       {audioUrl && (
         <motion.div
           className="mb-4"
-          initial={{ opacity: 0 }} 
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           <motion.button 
             onClick={() => handleDownload(audioUrl)} 
-            className="text-blue-600 font-medium text-lg bg-gray-200 py-2 px-4 rounded-full hover:bg-gray-300 transition-all duration-200"
+            className="text-[#003934] bg-[#fffef0] font-semibold text-lg py-2 px-4 rounded-full hover:bg-white transition-all duration-200"
           >
             ⬇️ Download MP3
           </motion.button>
@@ -132,26 +113,26 @@ const FileUpload = () => {
 
       {transcription && (
         <motion.div 
-          className="bg-gray-100 p-4 rounded-xl shadow-md w-full text-left"
+          className="bg-[#fffef0]/10 p-4 rounded-xl shadow-inner w-full text-left"
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-lg font-semibold mb-2">📝 Transcription:</h2>
-          <p className="whitespace-pre-wrap text-gray-700">{transcription}</p>
+          <p className="whitespace-pre-wrap text-[#fffef0]/90">{transcription}</p>
         </motion.div>
       )}
 
       {summary && (
         <motion.div 
-          className="bg-gray-100 p-4 rounded-xl shadow-md w-full text-left mt-4"
+          className="bg-[#fffef0]/10 p-4 rounded-xl shadow-inner w-full text-left mt-4"
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-lg font-semibold mb-2">📜 Summary and Action Items:</h2>
-          <p className="font-medium">Summary:</p>
-          <p className="whitespace-pre-wrap mb-2 text-gray-700">{summary}</p>
+          <p className="font-medium text-[#fffef0]">Summary:</p>
+          <p className="whitespace-pre-wrap mb-2 text-[#fffef0]/90">{summary}</p>
         </motion.div>
       )}
     </motion.div>
