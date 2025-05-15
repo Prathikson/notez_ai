@@ -34,11 +34,6 @@ const PdfExporter: React.FC<PdfExporterProps> = ({ transcription, summary, isPro
 
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-    // Watermark text
-    pdf.setTextColor(0, 57, 52, 0.3); // rgba(0,57,52,0.3)
-    pdf.setFontSize(50);
-    pdf.text('Notez AI', pdfWidth / 2, pdfHeight / 2, { align: 'center', angle: 45 });
-
     pdf.save('NotezAI_Transcript_Summary.pdf');
   };
 
@@ -46,18 +41,6 @@ const PdfExporter: React.FC<PdfExporterProps> = ({ transcription, summary, isPro
 
   return (
     <>
-      <div ref={pdfRef} className="w-full bg-[#003934] p-4 rounded-lg">
-        <div className="bg-[#fffef0]/10 p-4 rounded-xl shadow-inner w-full text-left mb-4">
-          <h2 className="text-lg font-semibold mb-2">📝 Transcription:</h2>
-          <p className="whitespace-pre-wrap text-[#fffef0]/90">{transcription}</p>
-        </div>
-
-        <div className="bg-[#fffef0]/10 p-4 rounded-xl shadow-inner w-full text-left">
-          <h2 className="text-lg font-semibold mb-2">📜 Summary and Action Items:</h2>
-          <p className="font-medium text-[#fffef0]">Summary:</p>
-          <p className="whitespace-pre-wrap mb-2 text-[#fffef0]/90">{summary}</p>
-        </div>
-      </div>
 
       <motion.button
         onClick={exportPDF}
