@@ -28,12 +28,7 @@ const PdfExporter: React.FC<PdfExporterProps> = ({ refToExport, isProUser }) => 
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-    pdf.setTextColor(0, 57, 52, 0.3);
-    pdf.setFontSize(50);
-    pdf.text('NoteZ AI', pdfWidth / 2, pdfHeight / 2, { align: 'center', angle: 45 });
-
-    pdf.save('NoteZAI_Transcript_Summary.pdf');
+    pdf.save('NotezAI_Transcript_Summary.pdf');
   };
 
   if (!isProUser) return null;

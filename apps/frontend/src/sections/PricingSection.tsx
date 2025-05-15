@@ -79,10 +79,12 @@ export default function PricingSection() {
       frame++;
       if (frame >= totalFrames) clearInterval(interval);
     }, 1000 / frameRate);
+
+    return () => clearInterval(interval); 
   }, [isAnnual]);
 
   return (
-    <section className="py-20 bg-primaryGreen text-white">
+    <section id='pricing' className="py-20 bg-primaryGreen text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-[clamp(2rem,5vw,2.5rem)] font-bold text-white mb-2">Simple Pricing</h2>
@@ -120,7 +122,7 @@ export default function PricingSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.005 }}
             >
               {plan.badge && (
                 <motion.div
