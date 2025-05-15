@@ -12,6 +12,7 @@
   "dependencies": {
     "framer-motion": "^12.10.5",
     "frontend": "file:",
+    "lucide-react": "^0.510.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-dropzone": "^14.3.8"
