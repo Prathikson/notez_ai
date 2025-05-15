@@ -27,7 +27,7 @@ const plans = [
     badge: 'Best Value',
   },
   {
-    name: 'NoteZ AI',
+    name: 'Notez AI',
     monthly: 89.99,
     yearly: 899.99,
     features: [

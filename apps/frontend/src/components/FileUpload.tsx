@@ -3,6 +3,7 @@ import { uploadFile } from '../services/api';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { Copy } from 'lucide-react';
+import PdfExporter from './PdfExporter';
 
 const FileUpload = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -12,6 +13,13 @@ const FileUpload = () => {
   const [summary, setSummary] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null); // show copy status
+
+    // const isProUser = true;
+  const isProUser = true;
+
+
+
+
 
   const handleFileChange = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -179,10 +187,16 @@ const FileUpload = () => {
               Copied!
             </motion.span>
           )}
+
+
           <p className="font-medium text-[#fffef0]">Summary:</p>
           <p className="whitespace-pre-wrap mb-2 text-[#fffef0]/90">{summary}</p>
         </motion.div>
       )}
+
+      {transcription && summary && (
+  <PdfExporter transcription={transcription} summary={summary} isProUser={isProUser} />
+)}
     </motion.div>
   );
 };

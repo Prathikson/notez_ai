@@ -57,7 +57,7 @@ export default function Footer() {
 
     {/* Center - Copyright */}
     <div className="text-sm space-y-1">
-      <p>&copy; {new Date().getFullYear()} NoteZ AI. All rights reserved.</p>
+      <p>&copy; {new Date().getFullYear()} Notez AI. All rights reserved.</p>
       <p>
         Developed by <span className="font-semibold underline underline-offset-4">Prathikson Jeyakumar</span>
       </p>
