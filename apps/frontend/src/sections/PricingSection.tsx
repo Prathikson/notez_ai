@@ -27,7 +27,7 @@ const plans = [
     badge: 'Best Value',
   },
   {
-    name: 'Notez AI',
+    name: 'NoteZ AI',
     monthly: 89.99,
     yearly: 899.99,
     features: [
@@ -64,7 +64,7 @@ export default function PricingSection() {
   useEffect(() => {
     const targetPrices = plans.map(p => (isAnnual ? p.yearly : p.monthly));
     const duration = 600;
-    const frameRate = 30;
+    const frameRate = 60;
     const totalFrames = duration / (1000 / frameRate);
 
     let frame = 0;
@@ -82,10 +82,10 @@ export default function PricingSection() {
   }, [isAnnual]);
 
   return (
-    <section id='pricing' className="py-20 bg-primaryGreen text-white">
+    <section className="py-20 bg-primaryGreen text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-[clamp(2rem,5vw,2.5rem)] font-bold text-white mb-2">Pricing</h2>
+          <h2 className="text-[clamp(2rem,5vw,2.5rem)] font-bold text-white mb-2">Simple Pricing</h2>
           <p className="text-white/80">Choose the plan that suits you best</p>
 
           {/* Toggle */}
@@ -100,7 +100,7 @@ export default function PricingSection() {
               <motion.div
                 layout
                 className="w-5 h-5 bg-primaryGreen rounded-full"
-                animate={{ scale: [1, 1.1, 1] }}
+                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ type: 'spring', stiffness: 300, duration: 0.5 }}
               />
             </div>
@@ -120,7 +120,7 @@ export default function PricingSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ scale: 1.005 }}
+              whileHover={{ scale: 1.03 }}
             >
               {plan.badge && (
                 <motion.div
