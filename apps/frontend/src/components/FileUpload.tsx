@@ -196,7 +196,9 @@ const FileUpload = () => {
         </motion.div>
       )}
       </div>
-      <PdfExporter refToExport={resultRef} isProUser={isProUser} />
+      {transcription && summary &&(
+        <PdfExporter refToExport={resultRef} isProUser={isProUser} />
+      )}
     </motion.div>
   );
 };
