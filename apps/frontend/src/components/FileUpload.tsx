@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { uploadFile } from '../services/api';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
@@ -16,6 +16,7 @@ const FileUpload = () => {
 
     // const isProUser = true;
   const isProUser = true;
+  const resultRef = useRef<HTMLDivElement>(null);
 
 
 
@@ -127,8 +128,10 @@ const FileUpload = () => {
         </motion.div>
       )}
 
+      <div ref={resultRef}>
+
       {transcription && (
-        <motion.div
+        <motion.div 
           className="bg-[#fffef0]/10 p-4 rounded-xl shadow-inner w-full text-left relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -187,16 +190,13 @@ const FileUpload = () => {
               Copied!
             </motion.span>
           )}
-
-
+          
           <p className="font-medium text-[#fffef0]">Summary:</p>
           <p className="whitespace-pre-wrap mb-2 text-[#fffef0]/90">{summary}</p>
         </motion.div>
       )}
-
-      {transcription && summary && (
-  <PdfExporter transcription={transcription} summary={summary} isProUser={isProUser} />
-)}
+      </div>
+      <PdfExporter refToExport={resultRef} isProUser={isProUser} />
     </motion.div>
   );
 };
