@@ -1,6 +1,10 @@
-const apiUrl = "https://notez-backend-rs5g.onrender.com"
+const apiUrl = import.meta.env.MODE === 'development'
+  ? import.meta.env.VITE_API_URL
+  : import.meta.env.VITE_API_PRODUCTION_URL;
 
-export const uploadFile = async (file: File): Promise<{ audioUrl: string; transcription: string; summary: string }> => {
+export const uploadFile = async (
+  file: File
+): Promise<{ audioUrl: string; transcription: string; summary: string; durationSec: number }> => {
   const formData = new FormData();
   formData.append('file', file);
 
@@ -19,13 +23,18 @@ export const uploadFile = async (file: File): Promise<{ audioUrl: string; transc
 
     const result = await response.json();
     console.log('Upload successful:', result);
+    const { audioUrl, transcription, summary, durationSec } = result;
 
-    // Log response data
-    console.log('Response:', result);
 
-    if (!result.audioUrl || !result.transcription || !result.summary) {
-      throw new Error('Missing audioUrl, transcription, or summary in response');
-    }
+    if (
+  !audioUrl ||
+  !transcription ||
+  !summary ||
+  typeof durationSec !== 'number' ||
+  durationSec <= 0
+) {
+  throw new Error('Missing audioUrl, transcription, summary, or durationSec in response');
+}
 
     return result;
   } catch (error) {

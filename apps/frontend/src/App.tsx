@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import FileUpload from './components/FileUpload'; // Make sure the path is correct based on where you saved the FileUpload component
+import FileUpload from './sections/FileUpload'; // Make sure the path is correct based on where you saved the FileUpload component
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PricingSection from './sections/PricingSection';

@@ -5,11 +5,12 @@ import { extractAudio } from '../services/ffmpeg';
 import fs from 'fs';
 import { OpenAI } from 'openai';
 import * as dotenv from 'dotenv';
+import { getAudioDurationInSeconds } from 'get-audio-duration';
 
-const router = express.Router();
 dotenv.config();
 
-// const production = process.env.PRODUCTION_URL!
+const router = express.Router();
+const url = process.env.URL!;
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
@@ -28,29 +29,30 @@ const upload = multer({ storage });
 // POST /upload
 router.post('/', upload.single('file'), async (req: Request & { file?: Express.Multer.File }, res: Response): Promise<void> => {
   try {
-    // Log to confirm file upload
     console.log('File uploaded:', req.file?.originalname);
 
     const uploadedFilePath = req.file?.path;
     if (!uploadedFilePath) {
       console.error('No file uploaded');
       res.status(400).json({ error: 'No file uploaded' });
-      return; // Ensure no response is returned here, only res.status() is called
+      return;
     }
 
-    // Convert to MP3 using FFmpeg
     console.log('Converting to MP3...');
     const audioPath = await extractAudio(uploadedFilePath);
     if (!audioPath) {
       console.error('Audio conversion failed');
       res.status(500).json({ error: 'Audio conversion failed' });
-      return; // Same here, no direct return
+      return;
     }
 
     const audioFileName = path.basename(audioPath);
     const absoluteAudioPath = path.resolve('uploads', audioFileName);
-    // const audioUrl = `http://localhost:5000/uploads/${audioFileName}`;
-    const audioUrl = `https://notez-backend-rs5g.onrender.com/uploads/${audioFileName}`;
+    const audioUrl = `${url}/uploads/${audioFileName}`;
+
+    // Get duration of the audio file (in seconds)
+    const durationSec = await getAudioDurationInSeconds(absoluteAudioPath);
+    console.log('Audio duration (seconds):', durationSec);
 
     // Transcribe the audio with OpenAI Whisper
     console.log('Transcribing audio...');
@@ -83,17 +85,12 @@ router.post('/', upload.single('file'), async (req: Request & { file?: Express.M
     const gptOutput = gptResponse.choices[0]?.message?.content || 'No summary available';
     console.log('GPT output:', gptOutput);
 
-    console.log('Sending response:', {
-  audioUrl,
-  transcription: transcriptionText,
-  summary: gptOutput,
-});
-
-    // Send response with audio URL, transcription, and summary
+    // Send response with audio URL, transcription, summary, and duration
     res.status(200).json({
       audioUrl,
       transcription: transcriptionText,
       summary: gptOutput,
+      durationSec, // <--- duration included here
     });
   } catch (err) {
     console.error('Error in upload route:', err);
